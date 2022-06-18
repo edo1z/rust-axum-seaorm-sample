@@ -1,0 +1,17 @@
+User:
+  type: "object"
+  properties:
+    id:
+      required: true
+      type: "integer"
+      format: "int32"
+    name:
+      required: true
+      type: "string"
+    msg:
+      required: false
+      type: "string"
+    age:
+      required: false
+      type: "integer"
+      format: "int16"

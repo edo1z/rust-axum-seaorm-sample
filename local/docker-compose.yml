@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  db:
+    build: ./db
+    restart: always
+    environment:
+      POSTGRES_DB: 'database'
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'password'
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  api:
+    build: ./api
+    ports:
+      - '8085:8080'
+    depends_on:
+      - db
+    volumes:
+      - ..:/app
+      - cargo-cache:/app/target
+    command: /bin/sh -c "cargo watch -x run"
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8026:8025"
+      - "1026:1025"
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - 8001:8080
+    volumes:
+      - ../openapi:/openapi
+    environment:
+      SWAGGER_JSON: /openapi/openapi.yaml
+volumes:
+  db_data:
+  cargo-cache:
+  target-cache:

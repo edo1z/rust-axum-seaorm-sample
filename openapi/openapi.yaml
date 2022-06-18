@@ -1,0 +1,15 @@
+openapi: "3.0.1"
+info:
+  title: "Rust Axum+SeaORM Sample"
+  description: ""
+  version: 0.0.1
+servers:
+  - url: http://localhost:8085
+tags:
+  - name: user
+paths:
+  "/users":
+    $ref: "./paths/users/index.yaml"
+components:
+  schemas:
+    $ref: "./schemas/index.yaml"
