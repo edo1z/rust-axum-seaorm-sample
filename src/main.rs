@@ -2,6 +2,7 @@ mod bootstrap;
 mod delivery;
 mod domain;
 mod router;
+mod usecase;
 
 #[tokio::main]
 async fn main() {
