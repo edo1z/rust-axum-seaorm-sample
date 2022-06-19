@@ -1,5 +1,6 @@
 mod bootstrap;
 mod delivery;
+mod domain;
 mod router;
 
 #[tokio::main]
