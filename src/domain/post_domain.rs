@@ -1,11 +1,5 @@
+use crate::domain::model::post_model::Post;
 use async_trait::async_trait;
-use serde::Serialize;
-
-#[derive(Serialize)]
-pub struct Post {
-    pub id: String,
-    pub title: String,
-}
 
 #[async_trait]
 pub trait PostUsecase {

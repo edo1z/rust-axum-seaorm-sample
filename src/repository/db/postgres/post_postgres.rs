@@ -1,4 +1,4 @@
-use crate::domain::post_domain::{Post, PostRepository};
+use crate::domain::{model::post_model::Post, post_domain::PostRepository};
 use async_trait::async_trait;
 
 pub struct PostRepo;

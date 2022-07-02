@@ -1,4 +1,4 @@
-use crate::domain::user_domain::{User, UserRepository};
+use crate::domain::{model::user_model::User, user_domain::UserRepository};
 use async_trait::async_trait;
 
 pub struct UserRepo;

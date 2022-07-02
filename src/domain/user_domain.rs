@@ -1,12 +1,5 @@
+use crate::domain::model::user_model::User;
 use async_trait::async_trait;
-use serde::Serialize;
-
-#[derive(Serialize)]
-pub struct User {
-    pub id: String,
-    pub name: String,
-    pub age: Option<i16>,
-}
 
 #[async_trait]
 pub trait UserUsecase {

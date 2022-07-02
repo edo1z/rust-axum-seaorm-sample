@@ -1,5 +1,8 @@
-use crate::domain::post_domain::{Post, PostRepository, PostUsecase};
 use crate::domain::Repositories;
+use crate::domain::{
+    model::post_model::Post,
+    post_domain::{PostRepository, PostUsecase},
+};
 use async_trait::async_trait;
 use std::sync::Arc;
 
