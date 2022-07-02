@@ -19,4 +19,7 @@ impl UserRepository for UserRepo {
     async fn get_all(&self) -> Vec<User> {
         UserEntity::find().all(&*self.conn).await.unwrap()
     }
+    async fn get_by_id(&self, id: i32) -> Result<User, String> {
+        Err("hoge".to_string())
+    }
 }

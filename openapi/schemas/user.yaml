@@ -8,9 +8,6 @@ User:
     name:
       required: true
       type: "string"
-    msg:
-      required: false
-      type: "string"
     age:
       required: false
       type: "integer"
