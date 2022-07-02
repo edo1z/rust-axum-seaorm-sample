@@ -15,9 +15,19 @@ pub trait Usecases {
     type Repo: Repositories;
     fn new(repo: Arc<Self::Repo>) -> UsecasesImpl<Self::Repo> {
         let user = UserUsecaseImpl::new(repo.clone());
-        let post = PostUsecaseImpl::new(repo.clone());
+        let post = PostUsecaseImpl::new(repo);
         UsecasesImpl { user, post }
     }
     fn user(&self) -> &UserUsecaseImpl<Self::Repo>;
     fn post(&self) -> &PostUsecaseImpl<Self::Repo>;
+}
+
+impl<R: Repositories> Usecases for UsecasesImpl<R> {
+    type Repo = R;
+    fn user(&self) -> &UserUsecaseImpl<R> {
+        &self.user
+    }
+    fn post(&self) -> &PostUsecaseImpl<R> {
+        &self.post
+    }
 }
