@@ -1,6 +1,7 @@
 mod bootstrap;
 mod delivery;
 mod domain;
+mod repository;
 mod router;
 mod usecase;
 
