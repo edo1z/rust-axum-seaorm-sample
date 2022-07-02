@@ -9,8 +9,7 @@ use cors::cors;
 use std::sync::Arc;
 
 pub async fn create_app() -> Router {
-    let conn = connect().await;
-    let repo = Arc::new(Repo::new(conn));
+    let repo = Arc::new(Repo::new().await);
     let usecases = Arc::new(UsecasesImpl::<Repo>::new(repo));
     router().layer(cors()).layer(Extension(usecases))
 }

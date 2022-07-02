@@ -1,6 +1,6 @@
 use crate::domain::Repositories;
 use crate::domain::{
-    model::user_model::User,
+    model::user_model::Model as User,
     user_domain::{UserRepository, UserUsecase},
 };
 use async_trait::async_trait;

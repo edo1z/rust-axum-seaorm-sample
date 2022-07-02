@@ -24,11 +24,11 @@ impl Repositories for Repo {
     }
 }
 impl Repo {
-    pub fn new(conn: DatabaseConnection) -> Self {
-        let arc_conn = Arc::new(conn);
+    pub async fn new() -> Self {
+        let conn = Arc::new(connect().await);
         Self {
-            user: UserRepo::new(arc_conn.clone()),
-            post: PostRepo::new(arc_conn),
+            user: UserRepo::new(conn.clone()),
+            post: PostRepo::new(conn),
         }
     }
 }
@@ -36,8 +36,7 @@ impl Repo {
 pub async fn connect() -> DatabaseConnection {
     dotenv().ok();
     let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    let conn = Database::connect(db_url)
+    Database::connect(db_url)
         .await
-        .expect("Database connection failed");
-    conn
+        .expect("Database connection failed")
 }
