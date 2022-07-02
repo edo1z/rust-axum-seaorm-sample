@@ -2,7 +2,11 @@ pub mod post_postgres;
 pub mod user_postgres;
 
 use crate::domain::Repositories;
+use dotenv::dotenv;
 use post_postgres::PostRepo;
+use sea_orm::{Database, DatabaseConnection};
+use std::env;
+use std::sync::Arc;
 use user_postgres::UserRepo;
 
 pub struct Repo {
@@ -20,10 +24,20 @@ impl Repositories for Repo {
     }
 }
 impl Repo {
-    pub fn new() -> Self {
+    pub fn new(conn: DatabaseConnection) -> Self {
+        let arc_conn = Arc::new(conn);
         Self {
-            user: UserRepo {},
-            post: PostRepo {},
+            user: UserRepo::new(arc_conn.clone()),
+            post: PostRepo::new(arc_conn),
         }
     }
+}
+
+pub async fn connect() -> DatabaseConnection {
+    dotenv().ok();
+    let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let conn = Database::connect(db_url)
+        .await
+        .expect("Database connection failed");
+    conn
 }
