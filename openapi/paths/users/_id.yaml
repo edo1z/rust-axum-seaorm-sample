@@ -1,14 +1,14 @@
 get:
   tags:
     - "user"
-  summary: get all users
-  operationId: get_users
+  summary: get user by id
+  operationId: get_user_by_id
   parameters:
-    - name: "name"
-      in: "query"
-      description: "user name"
-      required: false
-      type: "string"
+    - name: "id"
+      in: "path"
+      description: "User ID"
+      required: true
+      type: "integer"
   responses:
     "200":
       description: return users

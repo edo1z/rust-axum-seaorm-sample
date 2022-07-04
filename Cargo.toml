@@ -21,3 +21,7 @@ sea-orm = { version = "^0.8.0", features = [
   "runtime-tokio-native-tls",
   "macros"
 ]}
+anyhow = "1.0.58"
+thiserror = "1.0.31"
+mockall = "0.11.1"
+uuid = "1.1.2"

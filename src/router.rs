@@ -9,5 +9,7 @@ pub fn router() -> Router {
 }
 
 fn user_routes() -> Router {
-    Router::new().route("/", get(user_handler::index))
+    Router::new()
+        .route("/", get(user_handler::index))
+        .route("/:id", get(user_handler::get_by_id))
 }

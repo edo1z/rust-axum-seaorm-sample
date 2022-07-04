@@ -7,9 +7,13 @@ servers:
   - url: http://localhost:8085
 tags:
   - name: user
+  - name: post
 paths:
   "/users":
     $ref: "./paths/users/index.yaml"
+  "/users/{id}":
+    $ref: "./paths/users/_id.yaml"
 components:
   schemas:
-    $ref: "./schemas/index.yaml"
+    "User":
+      $ref: "./schemas/user.yaml#/User"

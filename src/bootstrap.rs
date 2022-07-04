@@ -1,6 +1,6 @@
 pub mod cors;
 
-use crate::repository::db::postgres::{connect, Repo};
+use crate::repository::db::postgres::Repo;
 use crate::router::router;
 use crate::usecase::Usecases;
 use crate::usecase::UsecasesImpl;
