@@ -25,3 +25,4 @@ anyhow = "1.0.58"
 thiserror = "1.0.31"
 mockall = "0.11.1"
 uuid = "1.1.2"
+validator = { version = "0.15", features = ["derive"] }
