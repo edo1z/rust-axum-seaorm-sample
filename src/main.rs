@@ -3,6 +3,8 @@ mod delivery;
 mod domain;
 mod repository;
 mod router;
+#[cfg(test)]
+mod test;
 mod usecase;
 
 #[tokio::main]

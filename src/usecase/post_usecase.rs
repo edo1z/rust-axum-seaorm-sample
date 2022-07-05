@@ -1,23 +1,20 @@
-use crate::domain::Repositories;
-use crate::domain::{
-    model::post_model::Post,
-    post_domain::{PostRepository, PostUsecase},
-};
+use crate::domain::{model::post_model::Post, post_domain::PostUsecase};
+use crate::repository::Repositories;
 use async_trait::async_trait;
 use std::sync::Arc;
 
-pub struct PostUsecaseImpl<R: Repositories> {
-    repo: Arc<R>,
+pub struct PostUsecaseImpl {
+    repo: Arc<Repositories>,
 }
-impl<R: Repositories> PostUsecaseImpl<R> {
-    pub fn new(repo: Arc<R>) -> Self {
+impl PostUsecaseImpl {
+    pub fn new(repo: Arc<Repositories>) -> Self {
         Self { repo }
     }
 }
 
 #[async_trait]
-impl<R: Repositories> PostUsecase for PostUsecaseImpl<R> {
+impl PostUsecase for PostUsecaseImpl {
     async fn get_all(&self) -> Vec<Post> {
-        self.repo.post().get_all().await
+        self.repo.post_repo.get_all().await
     }
 }

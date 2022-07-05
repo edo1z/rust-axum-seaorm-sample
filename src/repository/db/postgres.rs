@@ -1,7 +1,7 @@
 pub mod post_postgres;
 pub mod user_postgres;
 
-use crate::domain::Repositories;
+use crate::repository::Repositories;
 use dotenv::dotenv;
 use post_postgres::PostRepo;
 use sea_orm::{Database, DatabaseConnection};
@@ -9,28 +9,11 @@ use std::env;
 use std::sync::Arc;
 use user_postgres::UserRepo;
 
-pub struct Repo {
-    pub user: UserRepo,
-    pub post: PostRepo,
-}
-impl Repositories for Repo {
-    type UserRepo = UserRepo;
-    type PostRepo = PostRepo;
-    fn user(&self) -> &Self::UserRepo {
-        &self.user
-    }
-    fn post(&self) -> &Self::PostRepo {
-        &self.post
-    }
-}
-impl Repo {
-    pub async fn new() -> Self {
-        let conn = Arc::new(connect().await);
-        Self {
-            user: UserRepo::new(conn.clone()),
-            post: PostRepo::new(conn),
-        }
-    }
+pub async fn create_repositories() -> Repositories {
+    let conn = Arc::new(connect().await);
+    let user_repo = Box::new(UserRepo::new(conn.clone()));
+    let post_repo = Box::new(PostRepo::new(conn));
+    Repositories::new(user_repo, post_repo)
 }
 
 pub async fn connect() -> DatabaseConnection {

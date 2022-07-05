@@ -1,33 +1,24 @@
 pub mod post_usecase;
 pub mod user_usecase;
 
-use crate::domain::Repositories;
+use crate::domain::post_domain::PostUsecase;
+use crate::domain::user_domain::UserUsecase;
+
+use crate::repository::Repositories;
 use post_usecase::PostUsecaseImpl;
 use std::sync::Arc;
 use user_usecase::UserUsecaseImpl;
 
-pub struct UsecasesImpl<R: Repositories> {
-    pub user: UserUsecaseImpl<R>,
-    pub post: PostUsecaseImpl<R>,
+pub struct Usecases {
+    pub user_usecase: Box<dyn UserUsecase>,
+    pub post_usecase: Box<dyn PostUsecase>,
 }
 
-pub trait Usecases {
-    type Repo: Repositories;
-    fn new(repo: Arc<Self::Repo>) -> UsecasesImpl<Self::Repo> {
-        let user = UserUsecaseImpl::new(repo.clone());
-        let post = PostUsecaseImpl::new(repo);
-        UsecasesImpl { user, post }
-    }
-    fn user(&self) -> &UserUsecaseImpl<Self::Repo>;
-    fn post(&self) -> &PostUsecaseImpl<Self::Repo>;
-}
-
-impl<R: Repositories> Usecases for UsecasesImpl<R> {
-    type Repo = R;
-    fn user(&self) -> &UserUsecaseImpl<R> {
-        &self.user
-    }
-    fn post(&self) -> &PostUsecaseImpl<R> {
-        &self.post
+pub fn create_usecases(repo: Arc<Repositories>) -> Usecases {
+    let user_usecase = Box::new(UserUsecaseImpl::new(repo.clone()));
+    let post_usecase = Box::new(PostUsecaseImpl::new(repo));
+    Usecases {
+        user_usecase,
+        post_usecase,
     }
 }
