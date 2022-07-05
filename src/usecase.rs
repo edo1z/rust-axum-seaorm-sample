@@ -1,33 +1,22 @@
 pub mod post_usecase;
 pub mod user_usecase;
 
-use crate::domain::Repositories;
+use crate::repository::Repositories;
 use post_usecase::PostUsecaseImpl;
 use std::sync::Arc;
 use user_usecase::UserUsecaseImpl;
 
-pub struct UsecasesImpl<R: Repositories> {
-    pub user: UserUsecaseImpl<R>,
-    pub post: PostUsecaseImpl<R>,
+pub struct Usecases {
+    pub user_usecase: UserUsecaseImpl,
+    pub post_usecase: PostUsecaseImpl,
 }
-
-pub trait Usecases {
-    type Repo: Repositories;
-    fn new(repo: Arc<Self::Repo>) -> UsecasesImpl<Self::Repo> {
-        let user = UserUsecaseImpl::new(repo.clone());
-        let post = PostUsecaseImpl::new(repo);
-        UsecasesImpl { user, post }
-    }
-    fn user(&self) -> &UserUsecaseImpl<Self::Repo>;
-    fn post(&self) -> &PostUsecaseImpl<Self::Repo>;
-}
-
-impl<R: Repositories> Usecases for UsecasesImpl<R> {
-    type Repo = R;
-    fn user(&self) -> &UserUsecaseImpl<R> {
-        &self.user
-    }
-    fn post(&self) -> &PostUsecaseImpl<R> {
-        &self.post
+impl Usecases {
+    pub fn new(repo: Arc<Repositories>) -> Self {
+        let user_usecase = UserUsecaseImpl::new(repo.clone());
+        let post_usecase = PostUsecaseImpl::new(repo);
+        Self {
+            user_usecase,
+            post_usecase,
+        }
     }
 }
